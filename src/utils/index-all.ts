@@ -1,9 +1,20 @@
-import PetCard from '../components/PetCard.astro'
-import Layout from '../components/Layout.astro'
-import { turso } from '../utils/database'
-import type { Pet } from '../../turso/types'
+import { createClient } from "@libsql/client";
 
-export const prerender = false
+export const turso = createClient({
+  url: process.env.TURSO_DATABASE_URL,
+  authToken: process.env.TURSO_AUTH_TOKEN,
+});
 
-const data = await turso.execute(`SELECT * FROM pets order by snuggles desc`)
-const pets = (data.rows || []) as unknown as Pet[]
+import { turso } from "@/lib/turso";
+
+export default async function Page() {
+  const { rows } = await turso.execute("SELECT * FROM pets");
+
+  return (
+    <ul>
+      {rows.map((row) => (
+        <li key={row.id}>{row.id}</li>
+      ))}
+    </ul>
+  );
+}
