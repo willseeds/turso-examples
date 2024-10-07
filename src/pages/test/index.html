@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="stylesheet" href="https://example-styles.netlify.app/styles.css" />
+
+    <script src="../../utils/database.ts"></script>
+    <script src="../../utils/index-all.ts"></script>
+
+    <style>
+        section {
+            max-width: 54rem;
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: repeat(2, 1fr);
+        }
+    </style>
+
+  </head>
+  <body>
+    <div>
+        <Layout title="Pet Snuggles">
+            <h1>Give these pets some snuggles!</h1>
+            <section>
+              <script>{pets.map((pet) => <PetCard pet={pet} />)}</script>
+            </section>
+          </Layout>
+    </div>
+  </body>
+</html>
